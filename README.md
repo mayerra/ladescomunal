@@ -11,7 +11,7 @@ Versió estàtica, en català i castellà.
 - `es.html` — portada (CAS)
 - `nova-essencia.html` / `es/nova-esencia.html` — pàgina del projecte Nova Essència
 - `brand/`, `committee/`, `projects/`, `nova-essencia/` — imatges
-- `_next/` — CSS i JS
+- `assets/` — CSS i JS
 
 ## Publicació
 
