@@ -87,7 +87,7 @@ const ca = {
     intro: "El grup promotor que impulsa, dinamitza i cuida la Comunalitat.",
     logoAlt: (name: string) => `Logotip de ${name}`,
     members: [
-      { logo: "revalorem", name: "Revalorem SCCL", text: "Cooperativa sense ànim de lucre i d'iniciativa social que treballa per transformar el sistema alimentari cap a un model més just, saludable i respectuós." },
+      { logo: "revalorem", name: "RECOOP · Revalorem SCCL", text: "Cooperativa sense ànim de lucre i d'iniciativa social que treballa per transformar el sistema alimentari cap a un model més just, saludable i respectuós." },
       { logo: "champagnat", name: "Fundació Champagnat", text: "Promou la qualitat educativa i l'ocupabilitat dels infants, joves i famílies de la zona. Lidera l'eix d'ocupabilitat de la Comunalitat." },
       { logo: "ue-gardeny", name: "Unió Esportiva Gardeny", text: "Club esportiu de la Mariola que acompanya la formació de nois i noies del barri i lidera l'eix esportiu des del seu arrelament al territori." },
       { logo: "la-nou", name: "Associació La Nou", text: "Impulsa projectes culturals i espais de participació comunitària arrelats a la Zona 09 des de l'experiència compartida del veïnat." },
@@ -238,7 +238,7 @@ const es: Content = {
     intro: "El grupo promotor que impulsa, dinamiza y cuida la Comunalidad.",
     logoAlt: (name: string) => `Logotipo de ${name}`,
     members: [
-      { logo: "revalorem", name: "Revalorem SCCL", text: "Cooperativa sin ánimo de lucro y de iniciativa social que trabaja para transformar el sistema alimentario hacia un modelo más justo, saludable y respetuoso." },
+      { logo: "revalorem", name: "RECOOP · Revalorem SCCL", text: "Cooperativa sin ánimo de lucro y de iniciativa social que trabaja para transformar el sistema alimentario hacia un modelo más justo, saludable y respetuoso." },
       { logo: "champagnat", name: "Fundació Champagnat", text: "Promueve la calidad educativa y la empleabilidad de la infancia, la juventud y las familias de la zona. Lidera el eje de empleabilidad de la Comunalidad." },
       { logo: "ue-gardeny", name: "Unió Esportiva Gardeny", text: "Club deportivo de la Mariola que acompaña la formación de chicos y chicas del barrio y lidera el eje deportivo desde su arraigo en el territorio." },
       { logo: "la-nou", name: "Associació La Nou", text: "Impulsa proyectos culturales y espacios de participación comunitaria arraigados en la Zona 09 desde la experiencia compartida del vecindario." },
