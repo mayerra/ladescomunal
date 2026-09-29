@@ -1,23 +1,34 @@
 # La Descomunal — proposta de web
 
-Proposta de renovació de la web de La Descomunal (Comunalitat Urbana de la Zona 09 de Lleida).
-Versió estàtica, en català i castellà.
+Proposta de renovació de la web de La Descomunal (Comunalitat Urbana de la Zona 09 de Lleida), en català i castellà.
 
 **Disseny i desenvolupament:** Magdalena Ayerra — https://mayerra.github.io
 
-## Contingut
+Publicada a https://mayerra.github.io/ladescomunal/
 
-- `index.html` — portada (CAT)
-- `es.html` — portada (CAS)
-- `nova-essencia.html` / `es/nova-esencia.html` — pàgina del projecte Nova Essència
-- `brand/`, `committee/`, `projects/`, `nova-essencia/` — imatges
-- `assets/` — CSS i JS
+## Com està feta
+
+Lloc estàtic fet amb [Astro](https://astro.build). No carrega JavaScript de framework: només un petit script per al menú del mòbil.
+
+- `src/i18n/content.ts` — **tots els textos**, en català i castellà. Per canviar un text, edita'l aquí.
+- `src/assets/` — imatges (`brand/`, `committee/`, `projects/`, `nova-essencia/`). Astro les converteix a WebP i en genera diverses mides.
+- `src/components/Home.astro` — portada · `src/components/Nova.astro` — pàgina de Nova Essència
+- `src/layouts/Layout.astro` — capçalera, menú, peu i avís de proposta
+- `src/styles/site.css` — estils
+- `src/pages/` — rutes: `index.html`, `es.html`, `nova-essencia.html`, `es/nova-esencia.html`
+
+## Treballar-hi
+
+```bash
+npm ci
+npm run dev      # http://localhost:4321/ladescomunal/
+npm run build    # genera dist/
+```
 
 ## Publicació
 
-Lloc estàtic: no cal cap build. Es pot servir des de GitHub Pages
-(Settings → Pages → Deploy from a branch → `main` / `root`)
-o copiar la carpeta sencera a qualsevol allotjament.
+Cada canvi a `main` es publica sol amb GitHub Actions (`.github/workflows/deploy.yml`).
+Cal tenir configurat una vegada: *Settings → Pages → Source: GitHub Actions*.
 
 ## Pendents
 

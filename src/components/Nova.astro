@@ -1,0 +1,98 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Lines from "./Lines.astro";
+import { content, contactInfo, type Lang } from "../i18n/content";
+import { image } from "../i18n/images";
+import { pageUrl } from "../i18n/links";
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang];
+const nova = t.nova;
+const n = (index: number) => String(index + 1).padStart(2, "0");
+---
+<Layout lang={lang} page="nova" title={t.meta.novaTitle} description={t.meta.novaDescription}>
+  <section class="nova-detail-hero">
+    <div class="nova-detail-title">
+      <p class="eyebrow">{nova.eyebrow}</p>
+      <h1>Nova<br /><em>Essència</em></h1>
+      <p class="nova-detail-intro">{nova.intro}</p>
+    </div>
+    <div class="nova-detail-mark"><Image class="nova-detail-logo" src={image("nova-essencia/logo")} alt={nova.logoAlt} width={640} loading="eager" /></div>
+  </section>
+
+  <figure class="nova-detail-photo">
+    <Image src={image("nova-essencia/espai-cotreball")} alt={nova.photoAlt} widths={[640, 1000, 1400]} sizes="100vw" />
+    <figcaption>{nova.photoCaption}</figcaption>
+  </figure>
+
+  <section class="nova-story">
+    <div class="section-label">{nova.story.label}</div>
+    <div class="nova-story-grid">
+      <h2><Lines lines={nova.story.title} /></h2>
+      <div class="nova-prose">
+        <p class="lead">{nova.story.lead}</p>
+        {nova.story.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="nova-poster-feature">
+    <div class="nova-poster-copy">
+      <p class="section-label">{nova.poster.label}</p>
+      <h2><Lines lines={nova.poster.title} /></h2>
+      <p>{nova.poster.text}</p>
+      <dl>
+        <div><dt>{nova.poster.whereLabel}</dt><dd>{nova.poster.where}</dd></div>
+        <div><dt>{nova.poster.contactLabel}</dt><dd><a href={`tel:${contactInfo.phone}`}>{contactInfo.phoneShort}</a> · <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a></dd></div>
+      </dl>
+    </div>
+    <figure><Image src={image("nova-essencia/que-es-nova-essencia")} alt={nova.poster.imageAlt} widths={[480, 800]} sizes="(max-width: 1000px) 90vw, 40vw" /></figure>
+  </section>
+
+  <section class="nova-pillars">
+    <div class="section-label light">{nova.pillars.label}</div>
+    <div class="nova-pillars-heading">
+      <h2><Lines lines={nova.pillars.title} /></h2>
+      <p>{nova.pillars.intro}</p>
+    </div>
+    <div class="nova-pillar-grid">
+      {nova.pillars.items.map((item, index) => <article><span>{n(index)}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}
+    </div>
+  </section>
+
+  <section class="nova-activities">
+    <div class="nova-activities-heading">
+      <p class="section-label">{nova.activities.label}</p>
+      <h2><Lines lines={nova.activities.title} /></h2>
+      <p>{nova.activities.intro}</p>
+    </div>
+    <div class="nova-activity-gallery">
+      {nova.activities.items.map((item) => (
+        <figure><Image src={image(`nova-essencia/${item.image}`)} alt={item.alt} widths={[480, 800]} sizes="(max-width: 1000px) 90vw, 30vw" /><figcaption>{item.caption}</figcaption></figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="nova-network">
+    <div>
+      <p class="section-label">{nova.network.label}</p>
+      <h2><Lines lines={nova.network.title} /></h2>
+    </div>
+    <div class="nova-prose">
+      <p class="lead">{nova.network.lead}</p>
+      <p>{nova.network.text}</p>
+      <div class="nova-tags">{nova.network.tags.map((tag) => <span>{tag}</span>)}</div>
+    </div>
+  </section>
+
+  <section class="nova-cta">
+    <p>{nova.cta.kicker}</p>
+    <h2><Lines lines={nova.cta.title} /></h2>
+    <div>
+      <a class="button button-primary" href={pageUrl(lang, "home", t.anchors.projects)}>{nova.cta.primary}</a>
+      <a class="text-link" href={`mailto:${contactInfo.email}`}>{nova.cta.secondary}</a>
+    </div>
+  </section>
+</Layout>
