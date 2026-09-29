@@ -1,0 +1,11 @@
+---
+// Títol partit en línies (<br />); amb `emphasis`, l'última línia va destacada.
+interface Props { lines: string[]; emphasis?: boolean }
+const { lines, emphasis = false } = Astro.props;
+---
+{lines.map((line, index) => (
+  <Fragment>
+    {index > 0 && <br />}
+    {emphasis && index === lines.length - 1 ? <em>{line}</em> : line}
+  </Fragment>
+))}

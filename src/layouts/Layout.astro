@@ -1,0 +1,95 @@
+---
+import "../styles/site.css";
+import Logo from "../components/Logo.astro";
+import { content, contactInfo, type Lang } from "../i18n/content";
+import { assetUrl, pageUrl } from "../i18n/links";
+
+interface Props {
+  lang: Lang;
+  page: "home" | "nova";
+  title: string;
+  description: string;
+}
+
+const { lang, page, title, description } = Astro.props;
+const t = content[lang];
+const other: Lang = lang === "ca" ? "es" : "ca";
+const isHome = page === "home";
+const top = isHome ? t.anchors.top : "top";
+const nav = isHome
+  ? [
+      { href: pageUrl(lang, "home", t.anchors.about), label: t.nav.about },
+      { href: pageUrl(lang, "home", t.anchors.projects), label: t.nav.projects },
+      { href: pageUrl(lang, "home", t.anchors.committee), label: t.nav.committee },
+      { href: pageUrl(lang, "nova"), label: "Nova Essència", exclusive: true },
+    ]
+  : [
+      { href: pageUrl(lang, "home", t.anchors.projects), label: t.nav.projects },
+      { href: pageUrl(lang, "home", t.anchors.committee), label: t.nav.committee },
+      { href: pageUrl(lang, "home", t.anchors.contact), label: t.nav.contact, exclusive: true },
+    ];
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={assetUrl("favicon.png")} />
+    <link rel="alternate" hreflang="ca" href={pageUrl("ca", page)} />
+    <link rel="alternate" hreflang="es" href={pageUrl("es", page)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..900&display=swap" />
+  </head>
+  <body class="antialiased" id={isHome ? undefined : "top"}>
+    <p class="draft-notice">{t.ui.draftNotice}</p>
+    <main class={isHome ? undefined : "nova-page"}>
+      <header class:list={["site-header", { "detail-header": !isHome }]} data-site-header>
+        <a class="brand" href={pageUrl(lang, "home", isHome ? t.anchors.top : undefined)} aria-label={t.ui.home}><Logo /></a>
+        <nav aria-label={t.ui.mainNav} id="main-nav">
+          {nav.map((item) => (
+            <a class={item.exclusive ? "nav-exclusive" : undefined} href={item.href}>
+              {item.label}{item.exclusive && isHome && <span aria-hidden="true"> →</span>}
+            </a>
+          ))}
+        </nav>
+        <div class="lang-switch" aria-label={t.ui.language}>
+          {lang === "ca" ? <span aria-current="page">CAT</span> : <a href={pageUrl("ca", page)} hreflang="ca" lang="ca">CAT</a>}
+          {lang === "es" ? <span aria-current="page">CAS</span> : <a href={pageUrl("es", page)} hreflang="es" lang="es">CAS</a>}
+        </div>
+        <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" data-open-label={t.ui.menu} data-close-label={t.ui.closeMenu}>
+          <span class="menu-toggle-icon" aria-hidden="true"></span><span class="menu-toggle-label">{t.ui.menu}</span>
+        </button>
+      </header>
+      <slot />
+      <footer>
+        <a class="brand footer-brand" href={pageUrl(lang, "home", isHome ? t.anchors.top : undefined)} aria-label={t.ui.home}><Logo /></a>
+        <div class="footer-meta">
+          <p>{t.ui.region}</p>
+          <p class="design-credit">{t.ui.designedBy} <a href={contactInfo.designer} target="_blank" rel="noreferrer">Magdalena Ayerra</a></p>
+        </div>
+        <a class="back-top" href={`#${top}`}>{t.ui.backTop} <span aria-hidden="true">↑</span></a>
+      </footer>
+    </main>
+    <script>
+      // Menú desplegable per a pantalles petites.
+      const header = document.querySelector<HTMLElement>("[data-site-header]");
+      const toggle = header?.querySelector<HTMLButtonElement>(".menu-toggle");
+      const label = toggle?.querySelector(".menu-toggle-label");
+      const setOpen = (open: boolean) => {
+        if (!header || !toggle) return;
+        header.classList.toggle("menu-open", open);
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? "");
+        if (label) label.textContent = toggle.dataset.openLabel ?? "";
+      };
+      toggle?.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+      header?.querySelectorAll("nav a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+      document.addEventListener("keydown", (event) => { if (event.key === "Escape") setOpen(false); });
+      document.addEventListener("click", (event) => { if (header && !header.contains(event.target as Node)) setOpen(false); });
+    </script>
+  </body>
+</html>
